@@ -28,9 +28,16 @@ void setup() {
 
 void loop() {
   LoRa.beginPacket();
-  LoRa.print("BUTTON_PRESSED");
+  LoRa.print("HIGH");
   LoRa.endPacket();
       
+  Serial.println("Button Pressed, Sent Message");
+  delay(1000);
+
+  LoRa.beginPacket();
+  LoRa.print("LOW");
+  LoRa.endPacket();
+
   Serial.println("Button Pressed, Sent Message");
   delay(1000);
 }
