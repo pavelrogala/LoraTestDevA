@@ -12,19 +12,18 @@ const long debounceDelay = 500;    // 500 ms debounce delay
 void setup() {
   Serial.begin(115200);
   while (!Serial);
-  
-  pinMode(BUTTON_PIN, INPUT_PULLDOWN);
-  
   Serial.println("Initializing LoRa...");
 
-  LoRa.setPins(LORA_CS, LORA_RST, LORA_IRQ);
+  pinMode(BUTTON_PIN, INPUT_PULLDOWN);
+
+  //LoRa.setPins(LORA_CS, LORA_RST, LORA_IRQ);
   
   // Initialize LoRa
-  if (!LoRa.begin(433E6)) {  // Set LoRa frequency (e.g., 433 MHz)
-    Serial.println("Starting LoRa failed!");
-    while (1);  // Hang here indefinitely if LoRa fails to initialize
-  }
-  
+  //if (!LoRa.begin(433E6)) {  // Set LoRa frequency (e.g., 433 MHz)
+  //  Serial.println("Starting LoRa failed!");
+  //  while (1);  // Hang here indefinitely if LoRa fails to initialize
+  //}
+  delay(5000);
   Serial.println("LoRa Transmitter Initialized!");
 }
 
@@ -37,9 +36,9 @@ void loop() {
     if (currentMillis - lastPressTime >= debounceDelay) {
       lastPressTime = currentMillis;
       
-      LoRa.beginPacket();
-      LoRa.print("BUTTON_PRESSED");
-      LoRa.endPacket();
+      //LoRa.beginPacket();
+      //LoRa.print("BUTTON_PRESSED");
+      //LoRa.endPacket();
       
       Serial.println("Button Pressed, Sent Message");
     }
