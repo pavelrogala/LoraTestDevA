@@ -12,17 +12,18 @@ const long debounceDelay = 500;    // 500 ms debounce delay
 void setup() {
   Serial.begin(115200);
   while (!Serial);
-  Serial.println("Initializing LoRa...");
 
   pinMode(BUTTON_PIN, INPUT_PULLDOWN);
 
-  //LoRa.setPins(LORA_CS, LORA_RST, LORA_IRQ);
+  LoRa.setPins(LORA_CS, LORA_RST, LORA_IRQ);
   
   // Initialize LoRa
-  //if (!LoRa.begin(433E6)) {  // Set LoRa frequency (e.g., 433 MHz)
-  //  Serial.println("Starting LoRa failed!");
-  //  while (1);  // Hang here indefinitely if LoRa fails to initialize
-  //}
+  if (!LoRa.begin(433E6)) {  // Set LoRa frequency (e.g., 433 MHz)
+    Serial.println("Starting LoRa failed!");
+    while (1);  // Hang here indefinitely if LoRa fails to initialize
+  }
+  delay(1000);
+  Serial.println("1");
   delay(5000);
   Serial.println("LoRa Transmitter Initialized!");
 }
