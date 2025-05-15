@@ -31,17 +31,18 @@ void setup() {
 void loop() {
   // Read the button state
   if (digitalRead(BUTTON_PIN) == HIGH) {
-    unsigned long currentMillis = millis();
+    Serial.println("Button Pressed, Sent Message");
+    //unsigned long currentMillis = millis();
     
     // Check if enough time has passed for debounce (500ms)
-    if (currentMillis - lastPressTime >= debounceDelay) {
-      lastPressTime = currentMillis;
+    //if (currentMillis - lastPressTime >= debounceDelay) {
+      //lastPressTime = currentMillis;
       
       //LoRa.beginPacket();
       //LoRa.print("BUTTON_PRESSED");
       //LoRa.endPacket();
       
-      Serial.println("Button Pressed, Sent Message");
-    }
+      
+    //}
   }
 }
