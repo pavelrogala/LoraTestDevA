@@ -16,14 +16,14 @@ void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLDOWN);
   
   Serial.println("Initializing LoRa...");
+
+  LoRa.setPins(LORA_CS, LORA_RST, LORA_IRQ);
   
   // Initialize LoRa
   if (!LoRa.begin(433E6)) {  // Set LoRa frequency (e.g., 433 MHz)
     Serial.println("Starting LoRa failed!");
     while (1);  // Hang here indefinitely if LoRa fails to initialize
   }
-  
-  LoRa.setPins(LORA_CS, LORA_RST, LORA_IRQ);
   
   Serial.println("LoRa Transmitter Initialized!");
 }
