@@ -14,32 +14,14 @@ void setup() {
   while (!Serial);
   Serial.println("LoRa Sender");
 
-  // Setup LED pins
-  pinMode(LED_PIN_1, OUTPUT);
-  pinMode(LED_PIN_2, OUTPUT);
-
   // Setup LoRa transceiver module
   LoRa.setPins(ss, rst, dio0);
-
-  // Replace the LoRa.begin(---E-) argument with your location's frequency
-  // 433E6 for Asia
-  // 866E6 for Europe
-  // 915E6 for North America
-  
-  // Turn on LED on pin 13 to indicate LoRa initialization is happening
-  digitalWrite(LED_PIN_1, HIGH);
-  digitalWrite(LED_PIN_2, LOW); // Make sure LED on pin 12 is off initially
 
   // Try to initialize LoRa
   while (!LoRa.begin(433E6)) {
     Serial.println(".");
     delay(500);  // Wait and keep trying to initialize LoRa
   }
-
-  // LoRa initialized successfully
-  // Turn off the LED on pin 13 and turn on LED on pin 12
-  digitalWrite(LED_PIN_1, LOW);
-  digitalWrite(LED_PIN_2, HIGH);
 
   // Set sync word to ensure you're not receiving messages from other LoRa modules
   LoRa.setSyncWord(0xF3);
