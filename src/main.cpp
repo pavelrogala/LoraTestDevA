@@ -57,8 +57,5 @@ void loop() {
 //  LoRa.print(" Humidity: ");
 //  LoRa.print(h);
   LoRa.endPacket();
-
-  counter++;
-
   delay(50);
 }
