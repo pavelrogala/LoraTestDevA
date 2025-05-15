@@ -1,46 +1,53 @@
 #include <SPI.h>
 #include <LoRa.h>
 
-#define BUTTON_PIN 13
-#define LORA_CS    5
-#define LORA_RST   14
-#define LORA_IRQ   2
+//define the pins used by the transceiver module
+#define ss 5
+#define rst 14
+#define dio0 2
 
-unsigned long lastPressTime = 0;  // To track button press time
-const long debounceDelay = 500;    // 500 ms debounce delay
+//define the pins used by the DHT11 sensor
+#define DHTPIN 4
+#define DHTTYPE DHT11
+
+int counter = 0;
 
 void setup() {
+  //initialize Serial Monitor
   Serial.begin(115200);
   while (!Serial);
+  Serial.println("LoRa Sender");
 
-  pinMode(BUTTON_PIN, INPUT_PULLDOWN);
+  //setup LoRa transceiver module
+  LoRa.setPins(ss, rst, dio0);
 
-  LoRa.setPins(LORA_CS, LORA_RST, LORA_IRQ);
-  
-  // Initialize LoRa
-  while (!LoRa.begin(433E6)) {  // Set LoRa frequency (e.g., 433 MHz)
+  //replace the LoRa.begin(---E-) argument with your location's frequency 
+  //433E6 for Asia
+  //866E6 for Europe
+  //915E6 for North America
+  while (!LoRa.begin(433E6)) {
     Serial.println(".");
     delay(500);
   }
-
-  Serial.println("LoRa Transmitter Initialized!");
+   // Change sync word (0xF3) to match the receiver
+  // The sync word assures you don't get LoRa messages from other LoRa transceivers
+  // ranges from 0-0xFF
+  LoRa.setSyncWord(0xF3);
+  Serial.println("LoRa Initializing OK!");
 }
 
 void loop() {
-  // Read the button state
-  if (digitalRead(BUTTON_PIN) == HIGH) {
-    Serial.println("Button Pressed, Sent Message");
-    //unsigned long currentMillis = millis();
-    
-    // Check if enough time has passed for debounce (500ms)
-    //if (currentMillis - lastPressTime >= debounceDelay) {
-      //lastPressTime = currentMillis;
-      
-      //LoRa.beginPacket();
-      //LoRa.print("BUTTON_PRESSED");
-      //LoRa.endPacket();
-      
-      
-    //}
-  }
+  //Send LoRa packet to receiver
+  LoRa.beginPacket();
+  //LoRa.print("Temperature: ");
+  LoRa.print("10");
+  LoRa.print(",");
+  LoRa.print("20");
+//  LoRa.print(" Humidity: ");
+//  LoRa.print(h);
+  LoRa.endPacket();
+
+  counter++;
+
+  delay(50);
 }
