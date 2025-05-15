@@ -5,9 +5,6 @@
 #define rst  14  // Reset pin for LoRa
 #define dio0 2   // Interrupt pin for LoRa
 
-#define LED_PIN_1 13  // LED on pin 13 (turn on during LoRa initialization)
-#define LED_PIN_2 12  // LED on pin 12 (turn on after successful LoRa initialization)
-
 void setup() {
   // Initialize Serial Monitor
   Serial.begin(115200);
@@ -30,14 +27,10 @@ void setup() {
 }
 
 void loop() {
-  //Send LoRa packet to receiver
   LoRa.beginPacket();
-  //LoRa.print("Temperature: ");
-  LoRa.print("10");
-  LoRa.print(",");
-  LoRa.print("20");
-//  LoRa.print(" Humidity: ");
-//  LoRa.print(h);
+  LoRa.print("BUTTON_PRESSED");
   LoRa.endPacket();
-  delay(50);
+      
+  Serial.println("Button Pressed, Sent Message");
+  delay(1000);
 }
